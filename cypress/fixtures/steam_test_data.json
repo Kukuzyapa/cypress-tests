@@ -1,0 +1,17 @@
+{
+    "filters": {
+        "OS": {
+            "Linux": "SteamOS + Linux"
+        },
+        "playersCount": {
+            "coopLan": "Кооператив (LAN)"
+        },
+        "mark": {
+            "action": "Экшен"
+        }
+    },
+
+    "filtersCategory": {
+        "playersCount": "Количество игроков"
+    }
+}
