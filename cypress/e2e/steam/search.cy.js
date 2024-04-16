@@ -29,7 +29,7 @@ describe('Steam', () => {
         let aboutPage = new AboutPage()
 
         allure.step('Visit site', () => {
-            cy.visit('https://store.steampowered.com')  // Add base link
+            mainPage.visit()  // Add base link
         })
         
         allure.step('Click "About"', () => {
@@ -59,45 +59,45 @@ describe('Steam', () => {
         allure.story('Game info')
         allure.suite("Bitrix tests");
 
-        let main_page = new MainPage()
-        let top_sellers_page = new TopSellersPage()
-        let game_page = new GamePage()
+        let mainPage = new MainPage()
+        let topSellersPage = new TopSellersPage()
+        let gamePage = new GamePage()
 
         allure.step('Visit site', () => {
-            cy.visit('https://store.steampowered.com')  // Add base link
+            mainPage.visit()  // Add base link
         })
 
         allure.step('Click "Top sellers"', () => {
-            main_page.elements.newAndInterestingBtn().trigger('mouseover')
-            main_page.elements.topSellersBtn().click()
+            mainPage.elements.newAndInterestingBtn().trigger('mouseover')
+            mainPage.elements.topSellersBtn().click()
         })
 
         allure.step('Click "View more"', () => {
-            top_sellers_page.elements.viewMoreBtn().click()
+            topSellersPage.elements.viewMoreBtn().click()
         })
 
         allure.step('Aply filters', () => {
             allure.step('Select "SteamOS + Linux"', () => {
-                top_sellers_page.clickCheckbox(this.test_data.filters.OS.Linux)
+                topSellersPage.clickCheckbox(this.test_data.filters.OS.Linux)
                 cy.isCheckboxChecked(this.test_data.filters.OS.Linux)
             })
 
             allure.step('Select "Coop (Lan)"', () => {
-                top_sellers_page.expandFilter(this.test_data.filtersCategory.playersCount)
-                top_sellers_page.clickCheckbox(this.test_data.filters.playersCount.coopLan)
+                topSellersPage.expandFilter(this.test_data.filtersCategory.playersCount)
+                topSellersPage.clickCheckbox(this.test_data.filters.playersCount.coopLan)
                 cy.isCheckboxChecked(this.test_data.filters.playersCount.coopLan)
             })
 
             allure.step('Select "Action"', () => {
-                top_sellers_page.clickCheckbox(this.test_data.filters.mark.action)
+                topSellersPage.clickCheckbox(this.test_data.filters.mark.action)
                 cy.isCheckboxChecked(this.test_data.filters.mark.action)
                 cy.wait(3000)
             })
         })
 
         allure.step('Compare games count', () => {
-            top_sellers_page.elements.gamesLinks().then((games) => {
-                top_sellers_page.elements.gamesCountText().then((resultText) => {
+            topSellersPage.elements.gamesLinks().then((games) => {
+                topSellersPage.elements.gamesCountText().then((resultText) => {
                     cy.getNumber(resultText).then((playersCount) => {
                         cy.wrap(playersCount).should('eq', games.length)
                     })
@@ -106,15 +106,15 @@ describe('Steam', () => {
         })
 
         allure.step('Save game info', () => {
-            top_sellers_page.getGameInfo()
+            topSellersPage.getGameInfo()
         })
 
         allure.step('Open first game', () => {
-            top_sellers_page.openGameCart()
+            topSellersPage.openGameCart()
         })
         
         allure.step('Compare games info', () => {
-            game_page.getGameInfo()
+            gamePage.getGameInfo()
 
             cy.get('@listTitle').then((listTitle) => {
                 cy.get('@inGameTitle').then((inGameTitle) => {
@@ -122,11 +122,11 @@ describe('Steam', () => {
                 })
             })
     
-            // cy.get('@listPrice').then((listPrice) => {
-            //     cy.get('@inGamePrice').then((inGamePrice) => {
-            //         expect(inGamePrice).to.contain(listPrice)
-            //     })
-            // })
+            cy.get('@listPrice').then((listPrice) => {
+                cy.get('@inGamePrice').then((inGamePrice) => {
+                    expect(inGamePrice).to.contain(listPrice)
+                })
+            })
     
             cy.get('@listDate').then((listDate) => {
                 cy.get('@inGameDate').then((inGameDate) => {

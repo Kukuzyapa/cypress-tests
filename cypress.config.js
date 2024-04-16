@@ -6,6 +6,8 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       allureCypress(on);
-    }
-  },
+    },
+
+    baseUrl: 'https://store.steampowered.com'
+  }
 });

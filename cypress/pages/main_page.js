@@ -10,6 +10,10 @@ class MainPage{
         newAndInterestingBtn: () => cy.get('#noteworthy_tab'),
         topSellersBtn: () => cy.get('#noteworthy_flyout > div > div:nth-child(1) > a:nth-child(2)')
     }
+
+    visit() {
+        cy.visit('/')
+    }
     
     searchGame(game){
         this.elements.searchInput().type(game)
